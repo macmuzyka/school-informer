@@ -1,6 +1,5 @@
 package com.schoolinformer.model.entity
 
-import com.schoolinformer.model.dto.FeedbackDTO
 import jakarta.persistence.*
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
