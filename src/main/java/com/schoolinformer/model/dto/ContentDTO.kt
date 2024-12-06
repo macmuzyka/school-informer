@@ -1,3 +1,5 @@
 package com.schoolinformer.model.dto
 
-data class ContentDTO(val content: String = "")
+import java.time.LocalDateTime
+
+data class ContentDTO(val content: String = "", val createdAt: LocalDateTime = LocalDateTime.now())

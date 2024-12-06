@@ -21,8 +21,4 @@ data class FeedbackContent(var feedbackContent: String? = "") {
     @ManyToOne
     @JoinColumn(name = "feedback_provider_id")
     var feedbackProvider: FeedbackProvider? = null
-
-    override fun toString(): String {
-        return "FeedbackContent(feedbackContent=$feedbackContent, id=$id, createdAt=$createdAt, feedbackProvider=$feedbackProvider)"
-    }
 }
