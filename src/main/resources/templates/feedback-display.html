@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback display</title>
+</head>
+<body>
+
+<h1>Feedback grouped by providers</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Feedback provider</th>
+        <th>Provided feedback</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="feedbackProvider: ${groupedFeedback}">
+        <td th:text="${feedbackProvider.key}"></td>
+        <td>
+            <ul>
+                <li th:each="providedFeedback : ${feedbackProvider.value}">
+                    <span th:text="${providedFeedback.getContent()}"></span>
+                    <span th:text="${providedFeedback.getCreatedAt()}"></span>
+                </li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>
