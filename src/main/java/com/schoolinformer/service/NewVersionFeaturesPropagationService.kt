@@ -13,20 +13,20 @@ import org.springframework.stereotype.Service
 class NewVersionFeaturesPropagationService(
     private val javaMailSender: JavaMailSender,
     private val feedbackProviderRepository: FeedbackProviderRepository,
-    private val roadMapService: RoadMapService
+    private val featureService: FeatureService
 ) {
     private val log = LoggerFactory.getLogger(NewVersionFeaturesPropagationService::class.java)
 
     fun propagateNewVersionFeaturesAmongFeedbackProviders(): NewVersionFeaturesPropagationResponse {
         val mailsToUse = feedbackProviderRepository.findAllFeedbackProviderEmails()
-        val doneInReleasedVersion = roadMapService.getCurrentTodos()["Done"] ?: emptyList()
+
+        val doneInReleasedVersion = featureService.getFeaturesDone()
 
         log.info("Mails to send information: $mailsToUse")
         log.info("Done things to be sent: $doneInReleasedVersion")
 
-
         try {
-            val fullMailMessage = prepareMailMessage(doneInReleasedVersion)
+            val fullMailMessage = prepareMailMessage(doneInReleasedVersion.map { it.description })
                 .also { log.info("Prepared mail message: $it") }
             for (currentMail in mailsToUse) {
                 log.info("Sending mail to: $currentMail")
@@ -41,6 +41,8 @@ class NewVersionFeaturesPropagationService(
             log.error(e.message)
         }
 
-        return NewVersionFeaturesPropagationResponse(mailsToUse, doneInReleasedVersion)
+        featureService.archiveDoneFeatures()
+
+        return NewVersionFeaturesPropagationResponse(mailsToUse, doneInReleasedVersion.map { it.description })
     }
 }
