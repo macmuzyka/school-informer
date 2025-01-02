@@ -1,6 +1,5 @@
 package com.schoolinformer.config
 
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -15,16 +14,14 @@ open class NewVersionFeaturesPropagationMailConfig(
     @Value("\${support-mail}")
     val supportMail: String
 ) {
-    private val log = LoggerFactory.getLogger(NewVersionFeaturesPropagationMailConfig::class.java)
+
     @Bean
     open fun javaMailSender(): JavaMailSender {
-        val pw = String(Base64.getDecoder().decode(emailPassword))
-        log.info("Resolved password: $pw")
         val mailSender = JavaMailSenderImpl();
         mailSender.host = "smtp.gmail.com"
         mailSender.port = 587
         mailSender.username = "baseschoolinformer@gmail.com"
-        mailSender.password = pw
+        mailSender.password = String(Base64.getDecoder().decode(emailPassword))
 
         val properties = mailSender.javaMailProperties
         properties["mail.transport.protocol"] = "smtp"
