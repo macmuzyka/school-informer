@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 data class Feature(
     val description: String = "",
     @Enumerated(EnumType.STRING)
-    var developmentStage: DevelopmentStage = DevelopmentStage.NOT_YET_DETERMINED
+    var developmentStage: DevelopmentStage = DevelopmentStage.IDEA_TO_CONSIDER
 ) {
     constructor(feature: FeatureDTO) : this(
         description = feature.description,

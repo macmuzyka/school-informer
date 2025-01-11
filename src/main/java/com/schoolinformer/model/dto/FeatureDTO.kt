@@ -5,7 +5,7 @@ import com.schoolinformer.model.enums.DevelopmentStage
 
 data class FeatureDTO(
     val description: String = "",
-    val developmentStage: DevelopmentStage = DevelopmentStage.NOT_YET_DETERMINED
+    val developmentStage: DevelopmentStage = DevelopmentStage.IDEA_TO_CONSIDER
 ) {
     constructor(feature: Feature) : this(
         description = feature.description,

@@ -26,4 +26,19 @@ public class KafkaTopicConfig {
     public NewTopic feedbackSupplierTopic() {
         return new NewTopic("feedback-supplier", 1, (short) 1);
     }
+
+    @Bean
+    public NewTopic applicationVersionFetchTopic() {
+        return new NewTopic("application-version-fetch", 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic roadmapFetchTopic() {
+        return new NewTopic("roadmap-fetch", 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic outdatedApplicationInformation() {
+        return new NewTopic("application-validity", 1, (short) 1);
+    }
 }
