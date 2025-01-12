@@ -19,7 +19,6 @@ class NewVersionFeaturesPropagationService(
 
     fun propagateNewVersionFeaturesAmongFeedbackProviders(): NewVersionFeaturesPropagationResponse {
         val mailsToUse = feedbackProviderRepository.findAllFeedbackProviderEmails()
-
         val doneInReleasedVersion = featureService.getFeaturesDone()
 
         log.info("Mails to send information: $mailsToUse")

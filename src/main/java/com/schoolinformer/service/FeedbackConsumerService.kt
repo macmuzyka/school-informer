@@ -10,11 +10,15 @@ import org.springframework.stereotype.Service
 
 @Service
 class FeedbackConsumerService(
-        private val feedbackProviderRepository: FeedbackProviderRepository
+    private val feedbackProviderRepository: FeedbackProviderRepository
 ) {
     private val log = LoggerFactory.getLogger(FeedbackConsumerService::class.java)
 
-    @KafkaListener(topics = ["feedback-supplier"], groupId = "feedback")
+    @KafkaListener(
+        topics = ["feedback-supplier"],
+        groupId = "feedback",
+        containerFactory = "feedbackListenerContainerFactory"
+    )
     fun consumeFeedback(feedbackDTO: FeedbackDTO) {
         log.info("[KAFKA LISTENER] -> received message in [feedback] group ID")
         log.info("Incoming object: $feedbackDTO")
@@ -33,7 +37,8 @@ class FeedbackConsumerService(
 
     private fun getProvider(feedbackDTO: FeedbackDTO): FeedbackProvider {
         log.info("feedbackDTO: $feedbackDTO")
-        return feedbackProviderRepository.findFeedbackProviderByProviderEmailEquals(feedbackDTO.email).takeIf { it.isPresent }?.get()?.also { log.info("Existing provider found: $it") }
-                ?: FeedbackProvider(feedbackDTO).also { log.info("Saved new feedback provider: $it") }
+        return feedbackProviderRepository.findFeedbackProviderByProviderEmailEquals(feedbackDTO.email)
+            .takeIf { it.isPresent }?.get()?.also { log.info("Existing provider found: $it") }
+            ?: FeedbackProvider(feedbackDTO).also { log.info("Saved new feedback provider: $it") }
     }
 }

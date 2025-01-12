@@ -20,21 +20,26 @@ public class KafkaConsumerConfig {
     private String bootstrapAddress;
 
     @Bean
-    public ConsumerFactory<String, FeedbackDTO> feedbackConsumerFactory() {
-        Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "feedback");
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, FeedbackDTODeserializer.class);
-
-
-        return new DefaultKafkaConsumerFactory<>(props);
+    public ConcurrentKafkaListenerContainerFactory<String, FeedbackDTO> feedbackListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, FeedbackDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(defaultKafkaConsumerFactoryWithBasicConfig("feedback", FeedbackDTODeserializer.class));
+        return factory;
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, FeedbackDTO> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, FeedbackDTO> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(feedbackConsumerFactory());
+    public ConcurrentKafkaListenerContainerFactory<String, String> applicationVersionFetchListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(defaultKafkaConsumerFactoryWithBasicConfig("application-version", StringDeserializer.class));
         return factory;
+    }
+
+    @Bean
+    public <D> ConsumerFactory<String, Object> defaultKafkaConsumerFactoryWithBasicConfig(String groupId, Class<D> deserializer) {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializer);
+        return new DefaultKafkaConsumerFactory<>(props);
     }
 }

@@ -22,7 +22,7 @@ class FeatureService(
 
     fun markFeatureAsDone(featureId: Long): FeatureDisplayDTO {
         return featureRepository.findById(featureId).takeIf { it.isPresent }?.get()?.let {
-            it.apply { this.developmentStage = DevelopmentStage.DONE }
+            it.apply { this.developmentStage = DevelopmentStage.DONE_IN_PREVIOUS_VERSION }
             FeatureDisplayDTO(featureRepository.save(it))
         } ?: throw IllegalArgumentException("Could not find feature with ID $featureId")
     }
@@ -60,11 +60,11 @@ class FeatureService(
     }
 
     fun getFeaturesDone(): List<FeatureDisplayDTO> {
-        return featureRepository.findFeatureByDevelopmentStage(DevelopmentStage.DONE).map { FeatureDisplayDTO(it) }
+        return featureRepository.findFeatureByDevelopmentStage(DevelopmentStage.DONE_IN_PREVIOUS_VERSION).map { FeatureDisplayDTO(it) }
     }
 
     fun archiveDoneFeatures(): List<FeatureDisplayDTO> {
-        return featureRepository.findFeatureByDevelopmentStage(DevelopmentStage.DONE)
+        return featureRepository.findFeatureByDevelopmentStage(DevelopmentStage.DONE_IN_PREVIOUS_VERSION)
             .onEach { markFeatureAsArchived(it) }
             .map { FeatureDisplayDTO(it) }
     }

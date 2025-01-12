@@ -6,9 +6,9 @@ import org.apache.kafka.common.serialization.Deserializer
 
 class FeedbackDTODeserializer : Deserializer<FeedbackDTO> {
     private val mapper = ObjectMapper()
-    override fun deserialize(topic: String?, data: ByteArray?): FeedbackDTO {
+    override fun deserialize(topic: String?, bytes: ByteArray?): FeedbackDTO {
         return try {
-            mapper.readValue(data, FeedbackDTO::class.java)
+            mapper.readValue(bytes, FeedbackDTO::class.java)
         } catch (e: Exception) {
             throw RuntimeException("Failed to deserialize FeedbackDTO", e)
         }
