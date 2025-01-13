@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/feedback")
-class FeedbackController(private val feedbackService: FeedbackService) {
+class FeedbackController(
+    private val feedbackService: FeedbackService
+) {
     @GetMapping
     fun getAllFeedback(): ResponseEntity<Any> {
         return try {
