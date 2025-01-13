@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 @Entity
 @Table(name = "feedback_provider")
 @NamedNativeQuery(
-    name = "FeedbackProvider.findFeedbackContentGroupedByProviders",
+    name = "FeedbackProvider.findFeedbackContentWithProvider",
     query = "SELECT fp.provider_email, fc.feedback_content, fc.created_at " +
             "FROM feedback_provider fp " +
             "INNER JOIN feedback_content fc " +
