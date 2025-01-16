@@ -2,7 +2,6 @@ package com.schoolinformer.config;
 
 import com.schoolinformer.model.dto.ApplicationValidityDTO;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
