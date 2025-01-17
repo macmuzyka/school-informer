@@ -3,17 +3,17 @@ package com.schoolinformer
 import com.schoolinformer.model.entity.ApplicationVersion
 import com.schoolinformer.repository.ApplicationVersionRepository
 import org.slf4j.LoggerFactory
-import org.springframework.boot.context.event.ApplicationStartedEvent
+import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.stereotype.Component
 
 @Component
 class WarmupApplicationVersionDatabasePopulation(
     private val applicationVersionRepository: ApplicationVersionRepository
-) : ApplicationListener<ApplicationStartedEvent> {
+) : ApplicationListener<ApplicationReadyEvent> {
     private val log = LoggerFactory.getLogger(WarmupApplicationVersionDatabasePopulation::class.java)
 
-    override fun onApplicationEvent(event: ApplicationStartedEvent) {
+    override fun onApplicationEvent(event: ApplicationReadyEvent) {
         log.info("Application version database warmup")
         applicationVersionRepository.findAll()
             .takeIf { it.isEmpty() }

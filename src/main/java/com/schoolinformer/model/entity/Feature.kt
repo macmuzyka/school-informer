@@ -14,11 +14,12 @@ import java.time.LocalDateTime
 data class Feature(
     val description: String = "",
     @Enumerated(EnumType.STRING)
-    var developmentStage: DevelopmentStage = DevelopmentStage.IDEA_TO_CONSIDER
+    var developmentStage: DevelopmentStage = DevelopmentStage.IDEA_TO_CONSIDER,
+    var originalCreatedAt: LocalDateTime = LocalDateTime.now()
 ) {
     constructor(feature: FeatureDTO) : this(
         description = feature.description,
-        developmentStage = feature.developmentStage
+        developmentStage = feature.developmentStage,
     )
 
     @Id
