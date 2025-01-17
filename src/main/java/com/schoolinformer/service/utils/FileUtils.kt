@@ -1,11 +1,13 @@
 package com.schoolinformer.service.utils
 
+import org.slf4j.LoggerFactory
 import java.io.File
-import java.io.FileNotFoundException
 
 class FileUtils {
     companion object {
+        private val log = LoggerFactory.getLogger(FileUtils::class.java)
         fun fileExists(filePath: String): File? {
+            log.info("Exist check for file with path: $filePath")
             return File(filePath).takeIf { it.exists() }
         }
 

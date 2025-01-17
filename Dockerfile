@@ -1,7 +1,8 @@
 FROM openjdk:17-jdk-slim
 
 WORKDIR /app
-RUN mkdir -p config file_backup
+RUN mkdir -p config roadmap_backup
+COPY roadmap_backup/features.properties roadmap_backup/features.properties
 RUN apt-get update && apt-get install -y netcat && rm -rf /var/lib/apt/lists/*
 
 COPY target/*.jar informer-application.jar
