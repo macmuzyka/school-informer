@@ -16,7 +16,7 @@ class ApplicationVersionFetchConsumer(
     private val log = LoggerFactory.getLogger(ApplicationVersionFetchConsumer::class.java)
 
     @KafkaListener(
-        topics = ["application-version-fetch"],
+        topics = ["application-version"],
         groupId = "application-version",
         containerFactory = "applicationVersionFetchListenerContainerFactory"
     )

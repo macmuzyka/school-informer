@@ -20,7 +20,7 @@ class ApplicationVersionService(
         applicationVersionRepository.save(
             ApplicationVersion(
                 applicationVersion = incomingApplicationVersion,
-                description = "Application version received from application-version-fetch "
+                description = "Application version received from application-version"
             )
         ).also { log.info("Saved application version record: $it") }
     }

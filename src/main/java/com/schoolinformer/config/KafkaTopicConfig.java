@@ -29,7 +29,7 @@ public class KafkaTopicConfig {
 
     @Bean
     public NewTopic applicationVersionFetchTopic() {
-        return new NewTopic("application-version-fetch", 1, (short) 1);
+        return new NewTopic("application-version", 1, (short) 1);
     }
 
     @Bean
